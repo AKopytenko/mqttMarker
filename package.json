@@ -1,0 +1,30 @@
+{
+  "name": "mqtt-map-service",
+  "version": "1.0.0",
+  "description": "Сервис управления метками на карте с использованием MQTT-сервера",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "AKopytenko",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-concat-css": "^3.1.0",
+    "gulp-less": "^4.0.1",
+    "gulp-uglify": "^3.0.2"
+  },
+  "dependencies": {
+    "mongodb": "^3.5.2",
+    "mosca": "^2.8.3",
+    "mqtt": "^3.0.0",
+    "mysql": "^2.18.1"
+  }
+}
