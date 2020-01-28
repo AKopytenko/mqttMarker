@@ -11,8 +11,10 @@
     $ gulp vendors  
 ---
 Desktop
+
 ![](https://github.com/AKopytenko/mqttMarker/blob/master/preview-desktop.jpg)
 
 ---
 Mobile
+
 ![](https://github.com/AKopytenko/mqttMarker/blob/master/preview-mobile.jpg)
