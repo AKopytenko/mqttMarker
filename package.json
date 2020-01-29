@@ -1,30 +1,48 @@
 {
-  "name": "mqtt-map-service",
+  "name": "wpclear",
   "version": "1.0.0",
-  "description": "Сервис управления метками на карте с использованием MQTT-сервера",
-  "main": "gulpfile.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack-dev-server --open --config ./config/webpack.dev.conf.js",
+    "build": "webpack --config ./config/webpack.build.conf.js"
   },
-  "author": "AKopytenko",
+  "browswerslist": [
+    "> 1%",
+    "last 3 version"
+  ],
+  "author": "shurikkan",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
-    "del": "^5.1.0",
-    "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.1",
-    "gulp-babel": "^8.0.0",
-    "gulp-clean-css": "^4.2.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-concat-css": "^3.1.0",
-    "gulp-less": "^4.0.1",
-    "gulp-uglify": "^3.0.2"
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "autoprefixer": "^9.6.5",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^5.0.4",
+    "css-loader": "^3.2.0",
+    "css-mqpacker": "^7.0.0",
+    "cssnano": "^4.1.10",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.12.0",
+    "path": "^0.12.7",
+    "postcss-loader": "^3.0.0",
+    "reset-css": "^5.0.1",
+    "sass-loader": "^8.0.0",
+    "serialize-javascript": "^2.1.1",
+    "style-loader": "^1.0.0",
+    "vue-loader": "^15.8.3",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.41.1",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "mongodb": "^3.5.2",
-    "mosca": "^2.8.3",
-    "mqtt": "^3.0.0",
-    "mysql": "^2.18.1"
+    "bootstrap": "^4.3.1",
+    "vue": "^2.6.11"
   }
 }
