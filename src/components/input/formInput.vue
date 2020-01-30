@@ -6,7 +6,8 @@
             :minlength=min
             :maxlength=max
             v-model=val
-            @input="inputCoords()"
+            @focusout="inputCoords()"
+            :class="{ invalid: !inputValid }"
         >
         <span class="mapControl__formInputDescr">{{ descr }}</span>
     </div>
@@ -24,26 +25,24 @@ export default {
     ],
     methods: {
         inputCoords: function() {
-            let inputVal = this.val;
+            let inputVal = this.val
+            this.inputValid = true
             if(this.inputId !== 'pointName') {
-                if( /^-?\d{1,3}\.\d{0,6}$/.test(inputVal) && inputVal <= 180 && inputVal >= -180 )
-                    return true;
-                return false;
+                ( /^-?\d{1,3}\.\d{1,8}$/.test(inputVal) && inputVal <= 180 && inputVal >= -180) ? this.inputValid = true : this.inputValid = false
             } else {
-                if( /^[A-Za-zА-Яа-я\d\s\.]{3,75}$/.test(inputVal) )
-                    return true;
-                return false;
+                ( /^[A-Za-zА-Яа-я\d\s\.\,]{3,75}$/.test(inputVal) ) ? this.inputValid = true : this.inputValid = false
             }
+            this.$emit('validInput', {
+                input: this.inputId,
+                status: this.inputValid
+            })
         }
     },
     data() {
         return {
-            val: ''
+            val: '',
+            inputValid: true
         }
     }
 }
 </script>
-
-<style>
-
-</style>
