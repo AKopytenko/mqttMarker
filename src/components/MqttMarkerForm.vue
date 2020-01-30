@@ -72,8 +72,6 @@ export default {
             } else {
                 formFields.set(result.input, false);
             }
-
-            console.log(formFields.pointName);
             
             if(formFields.get('pointName') && formFields.get('pointX') && formFields.get('pointY')) {
                 this.formValid = true;
