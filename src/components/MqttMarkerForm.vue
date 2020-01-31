@@ -14,7 +14,7 @@
 
             <formInput 
                 label="Широта" 
-                inputId="markerX" 
+                inputId="markerY" 
                 min="2" 
                 max="10" 
                 descr="Формат: 000.000000" 
@@ -23,7 +23,7 @@
             
             <formInput 
                 label="Долгота" 
-                inputId="markerY" 
+                inputId="markerX" 
                 min="2" 
                 max="10" 
                 descr="Формат: 000.000000" 
@@ -34,7 +34,7 @@
                 <a 
                     href="#"
                     class="mapControl__formSubmit"
-                    :class="{ unable: !formValid }"
+                    :class="{ unable: !validForm }"
                     @click.prevent="sendMarkerData()"
                 >Послать</a>
             </div>

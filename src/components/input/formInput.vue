@@ -27,7 +27,9 @@ export default {
         inputCoords: function() {
             let inputVal = this.val
             this.inputValid = true
-            if(this.inputId !== 'markerName') {
+            if(this.inputId == 'markerY') {
+                ( /^-?\d{1,3}\.\d{1,8}$/.test(inputVal) && inputVal <= 90 && inputVal >= -90) ? this.inputValid = true : this.inputValid = false
+            } else if(this.inputId == 'markerX') {
                 ( /^-?\d{1,3}\.\d{1,8}$/.test(inputVal) && inputVal <= 180 && inputVal >= -180) ? this.inputValid = true : this.inputValid = false
             } else {
                 ( /^[A-Za-zА-Яа-я\d\s\.\,]{3,75}$/.test(inputVal) ) ? this.inputValid = true : this.inputValid = false

@@ -3,12 +3,12 @@
         <div id="mqttMarkerMap_yandex" class="mapFiddle__wrapper">
             <yandex-map 
                 :settings="settings" 
-                :coords="[coordsForm.x, coordsForm.y]"
+                :coords="[coordsForm.y, coordsForm.x]"
                 :zoom="15"
                 :controls="controls"
             >
                 <ymap-marker 
-                    :coords="[coordsForm.x, coordsForm.y]" 
+                    :coords="[coordsForm.y, coordsForm.x]" 
                     marker-id="1" 
                     :hint-content="coordsForm.name"
                 />
@@ -40,7 +40,7 @@ export default {
                 controls: ['zoomControl']
             },
             coords: [
-                this.coordsForm.x, this.coordsForm.y
+                this.coordsForm.y, this.coordsForm.x
             ],
             controls: ['zoomControl']
         }

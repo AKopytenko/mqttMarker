@@ -24,8 +24,8 @@ export default {
         return {
             coordsForm: {
                 name: 'Начальная',
-                x: 55.849913,
-                y: 37.542815
+                y: 55.849913,
+                x: 37.542815,
             }
         }
     },
