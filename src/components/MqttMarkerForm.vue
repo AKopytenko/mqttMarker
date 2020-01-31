@@ -5,7 +5,7 @@
             
             <formInput 
                 label="Название метки" 
-                inputId="pointName" 
+                inputId="markerName" 
                 min="3" 
                 max="75" 
                 descr="3-75 знаков. Буквы, цифры, пробелы, символы '- , .'" 
@@ -14,7 +14,7 @@
 
             <formInput 
                 label="Широта" 
-                inputId="pointX" 
+                inputId="markerX" 
                 min="2" 
                 max="10" 
                 descr="Формат: 000.000000" 
@@ -23,7 +23,7 @@
             
             <formInput 
                 label="Долгота" 
-                inputId="pointY" 
+                inputId="markerY" 
                 min="2" 
                 max="10" 
                 descr="Формат: 000.000000" 
@@ -31,13 +31,12 @@
             />
 
             <div class="mapControl__formGroup">
-                <input 
-                    type="submit" 
-                    value="Послать" 
+                <a 
+                    href="#"
                     class="mapControl__formSubmit"
                     :class="{ unable: !formValid }"
-                    @click="sendMarker()"
-                >
+                    @click.prevent="sendMarkerData()"
+                >Послать</a>
             </div>
             
         </form>
@@ -47,48 +46,52 @@
 <script>
 
 import formInput from './input/formInput.vue' 
+import MqttMarkerMap from './MqttMarkerMap.vue' 
 
 let formFields = new Map();
-formFields.set('pointName', false);
-formFields.set('pointX', false);
-formFields.set('pointY', false);
+formFields.set('markerName', false);
+formFields.set('markerX', false);
+formFields.set('markerY', false);
 
 export default {
     name: 'MqttMarkerForm', 
     props: {},
     components: {
-        formInput
+        formInput,
+        MqttMarkerMap
     },
     computed: {},
     data() {
         return {
-            formValid: false
+            validForm: false
         }
     },
     methods: {
         processValidInput(result) {
             if(result.status) {
-                formFields.set(result.input, true);
+                formFields.set(result.input, result.value);
             } else {
                 formFields.set(result.input, false);
             }
             
-            if(formFields.get('pointName') && formFields.get('pointX') && formFields.get('pointY')) {
-                this.formValid = true;
+            if(formFields.get('markerName') && formFields.get('markerX') && formFields.get('markerY')) {
+                this.validForm = true;
             } else {
-                this.formValid = false;
+                this.validForm = false;
             }
         },
-        sendMarker() {
-            if(this.formValid) {
-                console.log('Marker send: OK')
+        sendMarkerData(data) {
+            if(this.validForm) {
+                this.$emit('sendMarkerData', {
+                    name: formFields.get('markerName'),
+                    x: formFields.get('markerX'),
+                    y: formFields.get('markerY')
+                })
             } else {
-                console.log('Marker send: FAIL')
+                console.log('Ошибка: Форма заполнена некорректно');
             }
         }
-    },
-    watch: {},
-    mounted() {}
+    }
 }
 </script>
 
@@ -181,6 +184,9 @@ export default {
         }
 
         &Submit {
+            display: block;
+            text-align: center;
+            text-decoration: none;
             background: #369;
             border: 0;
             font-size: calc((100vw - 480px)/ (1280 - 480) * (24 - 16) + 12px);

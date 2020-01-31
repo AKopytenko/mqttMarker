@@ -1,7 +1,11 @@
 <template>
     <div class="mqttMarker">
-        <MqttMarkerMap />
-        <MqttMarkerForm />
+        <MqttMarkerMap 
+            :coordsForm="coordsForm"
+        />
+        <MqttMarkerForm 
+            @sendMarkerData="processSendMarkerData"
+        />
     </div>
 </template>
 
@@ -16,14 +20,22 @@ export default {
         MqttMarkerMap,
         MqttMarkerForm
     },
-    props: {},
-    computed: {},
-    methods: {},
-    watch: {},
     data() {
-        return {}
+        return {
+            coordsForm: {
+                name: 'Начальная',
+                x: 55.849913,
+                y: 37.542815
+            }
+        }
     },
-    mounted() {}
+    methods: {
+        processSendMarkerData(data) {
+            this.coordsForm.name   = data.name;
+            this.coordsForm.x      = data.x;
+            this.coordsForm.y      = data.y;
+        }
+    }
 }
 </script>
 

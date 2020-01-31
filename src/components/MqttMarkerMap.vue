@@ -3,14 +3,14 @@
         <div id="mqttMarkerMap_yandex" class="mapFiddle__wrapper">
             <yandex-map 
                 :settings="settings" 
-                :coords="coords"
+                :coords="[coordsForm.x, coordsForm.y]"
                 :zoom="15"
                 :controls="controls"
             >
                 <ymap-marker 
-                    :coords="coords" 
+                    :coords="[coordsForm.x, coordsForm.y]" 
                     marker-id="1" 
-                    hint-content="Странный дом" 
+                    :hint-content="coordsForm.name"
                 />
             </yandex-map>
         </div>
@@ -19,18 +19,17 @@
 
 <script>
 
-import { loadYmap, yandexMap, ymapMarker } from 'vue-yandex-maps'
+import { yandexMap, ymapMarker } from 'vue-yandex-maps'
 
 export default {
     name: 'MqttMarkerMap',
-    props: {},
+    props: {
+        coordsForm: Object
+    },
     components: {
         yandexMap, 
         ymapMarker
     },
-    computed: {},
-    methods: {},
-    watch: {},
     data() {
         return {
             settings: {
@@ -41,12 +40,11 @@ export default {
                 controls: ['zoomControl']
             },
             coords: [
-                55.849913, 37.542815
+                this.coordsForm.x, this.coordsForm.y
             ],
             controls: ['zoomControl']
         }
-    },
-    mounted() {}
+    }
 }
 
 </script>
