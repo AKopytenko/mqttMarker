@@ -123,9 +123,7 @@ module.exports = {
             inject: false
         }),
         new CopyWebpackPlugin([
-            { from: `${PATHS.src}/assets/fonts`, to: `${PATHS.assets}fonts` },
-            { from: `${PATHS.src}/assets/img`, to: `${PATHS.assets}img` },
-            { from: `${PATHS.src}/static`, to: '' },
+            { from: `${PATHS.src}/assets/fonts`, to: `${PATHS.assets}fonts` }
         ])
     ]
 }
