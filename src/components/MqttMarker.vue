@@ -1,18 +1,20 @@
 <template>
     <div class="mqttMarker">
-        <MqttMarkerMap 
-            :coordsForm="coordsForm"
-        />
-        <MqttMarkerForm 
-            @sendMarkerData="processSendMarkerData"
-        />
+        <MqttMarkerMap :coordsForm="coordsForm" />
+        <MqttMarkerForm @sendMarkerData="processSendMarkerData" />
     </div>
 </template>
 
 <script>
 
+import Mqtt             from 'mqtt'
 import MqttMarkerMap    from './MqttMarkerMap.vue'
 import MqttMarkerForm   from './MqttMarkerForm.vue'
+
+let broker = Mqtt.connect('mqtt://test.mosquitto.org:8080')
+broker.on('connect', function () {
+    broker.subscribe('marker')
+})
 
 export default {
     name: 'MqttMarker',
@@ -31,9 +33,15 @@ export default {
     },
     methods: {
         processSendMarkerData(data) {
-            this.coordsForm.name   = data.name;
-            this.coordsForm.x      = data.x;
-            this.coordsForm.y      = data.y;
+            let coordsForm = this.coordsForm;
+            broker.publish('marker', JSON.stringify(data))
+            broker.on('message', function (topic, message) {
+                let coordsMqtt = JSON.parse( message.toString() )
+
+                coordsForm.name   = coordsMqtt.name;
+                coordsForm.x      = coordsMqtt.x;
+                coordsForm.y      = coordsMqtt.y;
+            })
         }
     }
 }
