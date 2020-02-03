@@ -195,6 +195,7 @@ export default {
             line-height: 1;
             width: 25%;
             padding: 2vmin;
+            box-sizing: border-box;
             cursor: pointer;
 
             &.unable {
@@ -206,7 +207,7 @@ export default {
 
             @media (max-width: 576px) {
                 height: 40px;
-                padding: 8px;
+                padding: 10px;
                 font-size: 16px;
             }
         }

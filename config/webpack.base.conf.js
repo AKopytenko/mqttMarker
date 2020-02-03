@@ -1,6 +1,5 @@
 const   path                    = require('path'),
-        MiniCssExtractPlugin    = require('mini-css-extract-plugin'),
-        CopyWebpackPlugin       = require('copy-webpack-plugin'),
+        MiniCssExtractPlugin    = require('mini-css-extract-plugin')
         HtmlWebpackPlugin       = require('html-webpack-plugin'),
         {VueLoaderPlugin}       = require('vue-loader')
 
@@ -19,8 +18,7 @@ module.exports = {
     },
     output: {
         filename: `${PATHS.assets}js/[name].[hash].js`,
-        path: PATHS.dist,
-        // publicPath: '/'
+        path: PATHS.dist
     },
     optimization: {
         splitChunks: {
@@ -49,12 +47,6 @@ module.exports = {
             }
         }, {
             test: /\.(jpg|png|svg|gif|webp)$/,
-            loader: 'file-loader',
-            options: {
-                name: '[name].[ext]'
-            }
-        }, {
-            test: /\.(woff(2)?!ttf!eot!svg)(\?v=\d+\.\d+\.\d+)?$/,
             loader: 'file-loader',
             options: {
                 name: '[name].[ext]'
@@ -121,9 +113,6 @@ module.exports = {
             template: `${PATHS.src}/index.html`,
             filename: './index.html',
             inject: false
-        }),
-        new CopyWebpackPlugin([
-            { from: `${PATHS.src}/assets/fonts`, to: `${PATHS.assets}fonts` }
-        ])
+        })
     ]
 }

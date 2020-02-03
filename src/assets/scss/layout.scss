@@ -1,7 +1,5 @@
 @import './utils/libs.scss';
 @import '../../../node_modules/reset-css/sass/_reset.scss';
-@import 'utils/variables.scss';
-@import 'utils/fonts.scss';
 
 html, body {
     height: 100%;
@@ -9,7 +7,7 @@ html, body {
 }
 body {
     background: #f0f0f0;
-    font: 200 16px/1 'BaseFont', sans-serif;
+    font: 200 16px/1 'Open Sans', sans-serif;
 }
 #app {
     height: 100%;
