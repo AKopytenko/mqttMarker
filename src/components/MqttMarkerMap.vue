@@ -1,18 +1,18 @@
 <template>
     <div class="mqttMarkerMap mapFiddle">
         <div id="mqttMarkerMap_yandex" class="mapFiddle__wrapper">
-            <yandex-map 
+            <yandexMap 
                 :settings="settings" 
                 :coords="[coordsForm.y, coordsForm.x]"
                 :zoom="15"
                 :controls="controls"
             >
-                <ymap-marker 
+                <ymapMarker 
                     :coords="[coordsForm.y, coordsForm.x]" 
                     marker-id="1" 
                     :hint-content="coordsForm.name"
                 />
-            </yandex-map>
+            </yandexMap>
         </div>
     </div>
 </template>
