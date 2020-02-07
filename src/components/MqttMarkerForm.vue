@@ -45,22 +45,25 @@
 
 <script>
 
-import formInput from './input/formInput.vue' 
-import MqttMarkerMap from './MqttMarkerMap.vue' 
+import Mqtt             from 'mqtt'
+import FormInput        from './input/FormInput.vue' 
+
+let broker = Mqtt.connect('mqtt://test.mosquitto.org:8080')
+broker.on('connect', function () {
+    broker.subscribe('marker')
+})
 
 let formFields = new Map();
-formFields.set('markerName', false);
-formFields.set('markerX', false);
-formFields.set('markerY', false);
+    formFields.set('markerName', false);
+    formFields.set('markerX', false);
+    formFields.set('markerY', false);
 
 export default {
     name: 'MqttMarkerForm', 
     props: {},
     components: {
-        formInput,
-        MqttMarkerMap
+        FormInput
     },
-    computed: {},
     data() {
         return {
             validForm: false
@@ -81,12 +84,18 @@ export default {
             }
         },
         sendMarkerData(data) {
+            let $this = this;
             if(this.validForm) {
-                this.$emit('sendMarkerData', {
-                    name: formFields.get('markerName'),
-                    x: formFields.get('markerX'),
-                    y: formFields.get('markerY')
-                })
+                broker.publish('marker', data)
+                broker.on('message', function (topic, message) {
+                    $this.$store.dispatch('addCoords', [
+                        {
+                            name: formFields.get('markerName'),
+                            y: formFields.get('markerY'),
+                            x: formFields.get('markerX')
+                        }
+                    ])
+                });
             } else {
                 console.log('Ошибка: Форма заполнена некорректно');
             }
