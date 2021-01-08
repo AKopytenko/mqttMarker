@@ -1,24 +1,22 @@
-# mqtt-marker
+Приложение для управление гео-метками на карте с тестовым прогоном через MQTT-брокер.
 
-## Project setup
-```
-npm install
-```
+---
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+#### Установка зависимостей
+    $ npm i
 
-### Compiles and minifies for production
-```
-npm run build
-```
+#### Запуск сборки на dev-сервере
+    $ npm run dev
 
-### Lints and fixes files
-```
-npm run lint
-```
+#### Собрать production
+    $ npm run build
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+---
+Desktop
+
+![](https://github.com/AKopytenko/mqttMarker/blob/master/preview-desktop.jpg)
+
+---
+Mobile
+
+![](https://github.com/AKopytenko/mqttMarker/blob/master/preview-mobile.jpg)
