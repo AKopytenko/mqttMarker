@@ -1,17 +1,20 @@
 <template>
-  <div id="app">
-    <MqttMarker />
-  </div>
+    <div id="app">
+        <MqttMarker />
+    </div>
 </template>
 
 <script>
 
-import MqttMarker from './components/MqttMarker.vue'
+import MqttMarker from './components/MqttMarker'
 
 export default {
-  name: 'app',
-  components: {
-    MqttMarker
-  }
+
+    name: 'app',
+
+    components: {
+        
+        MqttMarker
+    }
 }
 </script>

@@ -2,10 +2,10 @@
     <div class="mapControl__formGroup">
         <label :for="inputId" class="mapControl__formLabel">{{ label }}</label>
         <input required class="mapControl__formInput" type="text" 
-            :id=inputId
-            :minlength=min
-            :maxlength=max
-            v-model=val
+            :id="inputId"
+            :minlength="min"
+            :maxlength="max"
+            v-model="val"
             @focusout="inputCoords()"
             :class="{ invalid: !inputValid }"
         >
@@ -15,7 +15,9 @@
 
 <script>
 export default {
-    name: 'inputCoords',
+
+    name: 'FormInput',
+
     props: [
         'label',
         'inputId',
@@ -23,28 +25,41 @@ export default {
         'max',
         'descr'
     ],
+
+    data() {
+
+        return {
+
+            val: '',
+            inputValid: true
+        }
+    },
+
     methods: {
+
         inputCoords: function() {
+
             let inputVal = this.val
             this.inputValid = true
+
             if(this.inputId == 'markerY') {
-                ( /^-?\d{1,3}\.\d{1,8}$/.test(inputVal) && inputVal <= 90 && inputVal >= -90) ? this.inputValid = true : this.inputValid = false
+
+                ( /^[-?\d]{1,3}\.\d{1,8}$/.test(inputVal) && inputVal <= 85.08171 && inputVal >= -85.08266) ? this.inputValid = true : this.inputValid = false
+            
             } else if(this.inputId == 'markerX') {
-                ( /^-?\d{1,3}\.\d{1,8}$/.test(inputVal) && inputVal <= 180 && inputVal >= -180) ? this.inputValid = true : this.inputValid = false
+
+                ( /^[-?\d]{1,3}\.\d{1,8}$/.test(inputVal) && inputVal <= 180 && inputVal >= -180) ? this.inputValid = true : this.inputValid = false
+            
             } else {
-                ( /^[A-Za-zА-Яа-я\d\s\.\,]{3,75}$/.test(inputVal) ) ? this.inputValid = true : this.inputValid = false
+
+                ( /^[A-Za-zА-Яа-я\d\s\\.\\,-_]{3,75}$/.test(inputVal) ) ? this.inputValid = true : this.inputValid = false
             }
+
             this.$emit('validInput', {
                 input: this.inputId,
                 status: this.inputValid,
                 value: inputVal
             })
-        }
-    },
-    data() {
-        return {
-            val: '',
-            inputValid: true
         }
     }
 }

@@ -1,22 +1,24 @@
-Приложение позволяет добавлять на карту гео-метки с помощью пользовательской формы [поля: название метки, широта, долгота]. В процессе добавления метки проходят через MQTT-брокер.
+# mqtt-marker
 
----
+## Project setup
+```
+npm install
+```
 
-#### Установка зависимостей
-    $ npm i
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-#### Запуск сборки на dev-сервере
-    $ npm run dev
+### Compiles and minifies for production
+```
+npm run build
+```
 
-#### Собрать production
-    $ npm run build
+### Lints and fixes files
+```
+npm run lint
+```
 
----
-Desktop
-
-![](https://github.com/AKopytenko/mqttMarker/blob/master/preview-desktop.jpg)
-
----
-Mobile
-
-![](https://github.com/AKopytenko/mqttMarker/blob/master/preview-mobile.jpg)
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
