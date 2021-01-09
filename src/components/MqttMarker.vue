@@ -1,7 +1,7 @@
 <template>
     <div class="mqttMarker">
 
-        <MqttMarkerMap :coordsForm="getCoords" />
+        <MqttMarkerMap />
 
         <MqttMarkerForm />
         

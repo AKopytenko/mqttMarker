@@ -1,112 +1,164 @@
 <template>
-    <div class="mqttMarkerForm mapControl">
-        <h1 class="mapControl__header">Управление метками</h1>
-        <form action="/" class="mapControl__form">
-            
-            <formInput 
-                label="Название метки" 
-                inputId="markerName" 
-                min="3" 
-                max="75" 
-                descr='3-75 знаков. Буквы, цифры, пробелы, символы "- _ , ."' 
-                @validInput="processValidInput" 
-            />
 
-            <formInput 
-                label="Широта" 
-                inputId="markerY" 
-                min="2" 
-                max="10" 
-                descr="Формат: 000.000000" 
-                @validInput="processValidInput" 
-            />
+    <div class="mqttMarkerForm mapControl">
+
+        <h1 class="mapControl__header">Управление метками</h1>
+
+        <form action="/" class="mapControl__form" @submit.prevent="sendCoordsForm($event.target.elements)">
             
-            <formInput 
-                label="Долгота" 
-                inputId="markerX" 
-                min="2" 
-                max="10" 
-                descr="Формат: 000.000000" 
-                @validInput="processValidInput" 
-            />
+            <div class="mapControl__formGroup">
+
+                <label for="markerName" class="mapControl__formLabel">Название метки</label>
+
+                <input required class="mapControl__formInput" type="text" 
+                    id="markerName"
+                    min="3" 
+                    max="75" 
+                    :class="{ 'invalid': 'markerName' in this.invalidFields }"
+                >
+
+                <span class="mapControl__formInputDescr">3-75 знаков. Буквы, цифры, пробелы, символы "- _ , ."</span>
+
+            </div>
 
             <div class="mapControl__formGroup">
-                <a 
-                    href="#"
+
+                <label for="markerY" class="mapControl__formLabel">Широта</label>
+
+                <input required class="mapControl__formInput" type="text" 
+                    id="markerY"
+                    min="2" 
+                    max="10" 
+                    :class="{ 'invalid': 'markerY' in this.invalidFields }"
+                >
+
+                <span class="mapControl__formInputDescr">Формат: 000.000000</span>
+
+            </div>
+
+            <div class="mapControl__formGroup">
+
+                <label for="markerX" class="mapControl__formLabel">Долгота</label>
+
+                <input required class="mapControl__formInput" type="text" 
+                    id="markerX"
+                    min="2" 
+                    max="10" 
+                    :class="{ 'invalid': 'markerX' in this.invalidFields }"
+                >
+
+                <span class="mapControl__formInputDescr">Формат: 000.000000</span>
+
+            </div>
+
+            <div class="mapControl__formGroup">
+                <button
                     class="mapControl__formSubmit"
-                    :class="{ unable: !validForm }"
-                    @click.prevent="sendMarkerData()"
-                >Послать</a>
+                    type="submit"
+                >
+                    Послать
+                </button>
             </div>
             
         </form>
+
     </div>
+
 </template>
 
 <script>
 
-import Mqtt             from 'mqtt'
-import FormInput        from '@/components/input/FormInput' 
+import Mqtt from 'mqtt'
+import { mapActions, mapGetters } from 'vuex'
 
-let broker = Mqtt.connect('mqtt://test.mosquitto.org:8080')
-broker.on('connect', function () {
-    broker.subscribe('marker')
-})
-
-let formFields = new Map();
-    formFields.set('markerName', false);
-    formFields.set('markerX', false);
-    formFields.set('markerY', false);
+const broker = Mqtt.connect('mqtt://test.mosquitto.org:8080')
 
 export default {
+
     name: 'MqttMarkerForm', 
-    props: {},
-    components: {
-        FormInput
-    },
+
     data() {
+
         return {
-            validForm: false
+
+            invalidFields: {},
+            invalidForm: false
         }
     },
+
     methods: {
-        processValidInput(result) {
-            if(result.status) {
-                formFields.set(result.input, result.value);
+
+        ...mapActions([
+
+            'addCoords'
+        ]),
+
+        sendCoordsForm(fields) {
+
+            const self  = this
+
+            const name  = fields.markerName.value
+            const x     = fields.markerX.value
+            const y     = fields.markerY.value
+
+            let data = {}
+
+            self.invalidFields = {}
+
+            if( /^[A-Za-zА-Яа-я\d\s\\.\\,-_]{3,75}$/.test(name) ) {
+                data.name = name
             } else {
-                formFields.set(result.input, false);
+                self.invalidFields.markerName = true
+                self.invalidForm = true
             }
-            
-            if(formFields.get('markerName') && formFields.get('markerX') && formFields.get('markerY')) {
-                this.validForm = true;
+
+            if( /^[-?\d]{1,3}\.\d{1,8}$/.test(x) && x <= 180 && x >= -180 ) {
+                data.x = x
             } else {
-                this.validForm = false;
+                self.invalidFields.markerX = true
+                self.invalidForm = true
             }
-        },
-        sendMarkerData(data) {
 
-            let $this = this
+            if( /^[-?\d]{1,3}\.\d{1,8}$/.test(y) && y <= 85.08171 && y >= -85.08266 ) {
+                data.y = y
+            } else {
+                self.invalidFields.markerY = true
+                self.invalidForm = true
+            }
 
-            if(this.validForm) {
+            if( !self.invalidForm ) {
 
-                broker.publish('marker', data)
+                broker.subscribe('marker', function (error) {
 
-                broker.on('message', function () {
+                    if (!error) {
 
-                    $this.$store.dispatch('addCoords', [
-                        {
-                            name: formFields.get('markerName'),
-                            y: formFields.get('markerY'),
-                            x: formFields.get('markerX')
-                        }
-                    ])
+                        broker.publish('marker', JSON.stringify(data))
+
+                    } else {
+
+                        console.error('MQTT: Ошибка при попытке подписки [', error, ']')
+                    }
                 })
+                
+                broker.on('message', function (topic, message) {
 
-            } else {
-
-                console.log('Ошибка: Форма заполнена некорректно')
+                    switch(topic) {
+                        
+                        case 'marker':
+                            self.addCoords( JSON.parse(message.toString()) )
+                            break
+                    }
+                })
             }
         }
+    },
+
+    computed: {
+
+        ...mapGetters([
+
+            'getCoords'
+        ])
     }
 }
 </script>

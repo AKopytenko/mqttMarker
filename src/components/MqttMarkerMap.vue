@@ -3,14 +3,14 @@
         <div id="mqttMarkerMap_yandex" class="mapFiddle__wrapper">
             <yandexMap 
                 :settings="settings" 
-                :coords="[coordsForm.y, coordsForm.x]"
+                :coords="[getCoords.y, getCoords.x]"
                 :zoom="15"
                 :controls="controls"
             >
                 <ymapMarker 
-                    :coords="[coordsForm.y, coordsForm.x]" 
+                    :coords="[getCoords.y, getCoords.x]" 
                     marker-id="1" 
-                    :hint-content="coordsForm.name"
+                    :hint-content="getCoords.name"
                 />
             </yandexMap>
         </div>
@@ -20,30 +20,41 @@
 <script>
 
 import { yandexMap, ymapMarker } from 'vue-yandex-maps'
+import { mapGetters } from 'vuex'
 
 export default {
+
     name: 'MqttMarkerMap',
-    props: {
-        coordsForm: Object
-    },
-    components: {
-        yandexMap, 
-        ymapMarker
-    },
+
     data() {
+
         return {
+
             settings: {
+
                 apiKey: '01f61c8f-de12-42a5-b23f-111c211500a9',
                 lang: 'ru_RU',
                 coordorder: 'latlong',
                 version: '2.1',
                 controls: ['zoomControl']
             },
-            coords: [
-                this.coordsForm.y, this.coordsForm.x
-            ],
+
             controls: ['zoomControl']
         }
+    },
+
+    components: {
+
+        yandexMap, 
+        ymapMarker
+    },
+
+    computed: {
+
+        ...mapGetters([
+
+            'getCoords'
+        ])
     }
 }
 
