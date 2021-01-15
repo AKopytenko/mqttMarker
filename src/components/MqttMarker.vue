@@ -1,18 +1,15 @@
 <template>
     <div class="mqttMarker">
-
         <MqttMarkerMap />
-
         <MqttMarkerForm />
-        
     </div>
 </template>
 
 <script>
 
-import { mapGetters }     from 'vuex'
-import MqttMarkerMap    from './MqttMarkerMap'
-import MqttMarkerForm   from './MqttMarkerForm'
+import { mapActions }  from 'vuex'
+import MqttMarkerMap   from '@/components/MqttMarkerMap'
+import MqttMarkerForm  from '@/components/MqttMarkerForm'
 
 export default {
 
@@ -24,12 +21,17 @@ export default {
         MqttMarkerForm
     },
 
-    computed: {
-        
-        ...mapGetters([
-            
-            'getCoords'
+    methods: {
+
+        ...mapActions([
+
+            'addBroker'
         ])
+    },
+
+    created() {
+
+        this.addBroker()
     }
 }
 </script>

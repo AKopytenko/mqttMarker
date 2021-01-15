@@ -17,9 +17,19 @@ export default {
 
     actions: {
 
-        addCoords({state}, coords) {
+        async addCoords({ getters }, marker) {
 
-            state.coords = coords
+            const broker = getters.getBroker
+
+            if(broker) {
+
+                broker.publish('marker', JSON.stringify(marker))
+            }
+        },
+
+        updateCoords({state}, marker) {
+
+            state.coords = marker
         }
     }
 }

@@ -6,7 +6,7 @@
 
 <script>
 
-import MqttMarker from './components/MqttMarker'
+import MqttMarker from '@/components/MqttMarker'
 
 export default {
 

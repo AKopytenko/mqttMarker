@@ -1,5 +1,6 @@
 <template>
     <div class="mqttMarkerMap mapFiddle">
+        {{ getCoords }}
         <div id="mqttMarkerMap_yandex" class="mapFiddle__wrapper">
             <yandexMap 
                 :settings="settings" 
@@ -32,7 +33,7 @@ export default {
 
             settings: {
 
-                apiKey: '01f61c8f-de12-42a5-b23f-111c211500a9',
+                apiKey: '',
                 lang: 'ru_RU',
                 coordorder: 'latlong',
                 version: '2.1',
@@ -61,23 +62,5 @@ export default {
 </script>
 
 <style lang="scss">
-.mapFiddle {
-    width: 50%;
-    height: 100%;
-
-    .ymap-container {
-        width: 100%;
-        height: 100%;
-    }
-
-    @media (max-width: 576px) {
-        width: 100%;
-        height: 50%;
-    }
-
-    &__wrapper {
-        width: 100%;
-        height: 100%;
-    }
-}
+@import '@/assets/styles/components/mqttMarkerMap.scss';
 </style>

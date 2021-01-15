@@ -68,10 +68,7 @@
 
 <script>
 
-import Mqtt from 'mqtt'
 import { mapActions, mapGetters } from 'vuex'
-
-const broker = Mqtt.connect('mqtt://test.mosquitto.org:8080')
 
 export default {
 
@@ -128,27 +125,7 @@ export default {
 
             if( !self.invalidForm ) {
 
-                broker.subscribe('marker', function (error) {
-
-                    if (!error) {
-
-                        broker.publish('marker', JSON.stringify(data))
-
-                    } else {
-
-                        console.error('MQTT: Ошибка при попытке подписки [', error, ']')
-                    }
-                })
-                
-                broker.on('message', function (topic, message) {
-
-                    switch(topic) {
-                        
-                        case 'marker':
-                            self.addCoords( JSON.parse(message.toString()) )
-                            break
-                    }
-                })
+                this.addCoords(data)
             }
         }
     },
