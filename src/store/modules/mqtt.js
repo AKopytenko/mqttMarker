@@ -18,7 +18,7 @@ export default {
 
     actions: {
 
-        async addBroker({getters, dispatch, state}) {
+        async addBroker({dispatch, state}) {
 
             const broker = await Mqtt.connect('mqtt://test.mosquitto.org:8080')
 
