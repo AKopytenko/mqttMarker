@@ -1,6 +1,5 @@
 <template>
     <div class="mqttMarkerMap mapFiddle">
-        {{ getCoords }}
         <div id="mqttMarkerMap_yandex" class="mapFiddle__wrapper">
             <yandexMap 
                 :settings="settings" 
