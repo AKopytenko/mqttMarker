@@ -1,4 +1,5 @@
-@import './libs/eric-reset.scss';
+@import '@/assets/styles/libs/eric-reset.scss';
+@import '@/assets/styles/_fonts.scss';
 
 html, body {
     height: 100%;
@@ -6,7 +7,10 @@ html, body {
 }
 body {
     background: #f0f0f0;
-    font: 200 16px/1 'Open Sans', sans-serif;
+    font: 400 16px/normal 'roboto-condensed', Arial, sans-serif;
+}
+button {
+    font: 200 16px/normal 'roboto-condensed', Arial, sans-serif;
 }
 #app {
     height: 100%;
@@ -18,6 +22,10 @@ body {
     height: 100%;
     
     background: #f0f0f0;
+}
+h1, h2, h3 {
+
+    font-weight: 200;
 }
 
 @media (min-width: 1200px) {
